@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hospital Details</title>
+  <link rel="stylesheet" href="uiStyle.css">
+</head>
+<body>
+
+  <h1 id="hospitalName"></h1>
+  <p id="hospitalInfo"></p>
+
+  <h3>Reviews</h3>
+  <div id="reviewsContainer"></div>
+
+  <h3>Add Review</h3>
+  <select id="ratingSelect">
+    <option value="">Select rating</option>
+    <option value="1">1 Star</option>
+    <option value="2">2 Stars</option>
+    <option value="3">3 Stars</option>
+    <option value="4">4 Stars</option>
+    <option value="5">5 Stars</option>
+  </select>
+
+  <textarea id="reviewText" placeholder="Write your review..."></textarea>
+
+  <button id="submitReview">Submit</button>
+
+  <p id="message"></p>
+
+  <script src="script_hospInf.js"></script>
+</body>
+</html>
