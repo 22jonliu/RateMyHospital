@@ -48,6 +48,21 @@
     {% empty %}
     <p>No facilities yet. Add some in the admin panel!</p>
     {% endfor %}
+
+    {% for review in reviews %}
+    <div class="facility-card">
+        <div class="facility-name">{{ review.job_title }}</div>
+        <div class="address"> {{ review.department }}</div>
+        <div class="address">{{ review.hourly_rate }}</div>
+        <div class="address"> {{ review.overall_rating }}</div>
+        <div class="address">{{ review.pros }}</div>
+        <div class="address"> {{ review.cons }}</div>
+        <div class="address">{{ review.would_recommend }}</div>
+        <div class="address"> {{ review.date_posted }}</div>
+    </div>    
+    {% empty %}
+    <p>No facilities yet. Add some in the admin panel!</p>
+    {% endfor %}
     
 </body>
 </html>
