@@ -3,66 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Reviews</title>
+    <title>RateMyHospital - Search</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        h1 {
+            padding: 40px 20px;
+            background-color: #f8f9fa;
             color: #333;
         }
-        
-        .facility-card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .search-container {
+            text-align: center;
+            margin-bottom: 40px;
         }
-        
-        .facility-name {
-            font-size: 24px;
-            font-weight: bold;
+        h1 {
             color: #2c3e50;
+            font-size: 2.5em;
             margin-bottom: 10px;
         }
-        
-        .address {
-            color: #666;
+        .search-box {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        .search-box:focus {
+            border-color: #007bff;
+        }
+        .results-list {
+            list-style: none;
+            padding: 0;
+        }
+        .result-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .hospital-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .hospital-meta {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .no-results {
+            text-align: center;
+            color: #6c757d;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>🏥 Hospital Reviews</h1>
-    
-    {% for facility in facilities %}
-    <div class="facility-card">
-        <div class="facility-name">{{ facility.name }}</div>
-        <div class="address">📍 {{ facility.full_address }}</div>
+    <div class="search-container">
+        <h1>🏥 RateMyHospital</h1>
+        <p>Find and review healthcare facilities</p>
+        <form action="{% url 'RateMyHospital:home' %}" method="get">
+            <input type="text" name="q" class="search-box" placeholder="Search by hospital name or city..." value="{{ query|default:'' }}">
+        </form>
     </div>
-    {% empty %}
-    <p>No facilities yet. Add some in the admin panel!</p>
-    {% endfor %}
 
-    {% for review in reviews %}
-    <div class="facility-card">
-        <div class="facility-name">{{ review.job_title }}</div>
-        <div class="address"> {{ review.department }}</div>
-        <div class="address">{{ review.hourly_rate }}</div>
-        <div class="address"> {{ review.overall_rating }}</div>
-        <div class="address">{{ review.pros }}</div>
-        <div class="address"> {{ review.cons }}</div>
-        <div class="address">{{ review.would_recommend }}</div>
-        <div class="address"> {{ review.date_posted }}</div>
-    </div>    
-    {% empty %}
-    <p>No facilities yet. Add some in the admin panel!</p>
-    {% endfor %}
-    
+    {% if query %}
+        <div class="results-list">
+            {% for facility in facilities %}
+                <a href="{% url 'RateMyHospital:hospital_detail' facility.pk %}" class="result-item">
+                    <div class="hospital-name">{{ facility.name }}</div>
+                    <div class="hospital-meta">📍 {{ facility.city }}, {{ facility.state }} | {{ facility.full_address }}</div>
+                </a>
+            {% empty %}
+                <div class="no-results">No hospitals found matching "{{ query }}"</div>
+            {% endfor %}
+        </div>
+    {% endif %}
 </body>
 </html>

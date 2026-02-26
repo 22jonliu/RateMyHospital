@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ hospital.name }} - Reviews</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .address {
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .review-card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid #007bff;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .job-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .rating-badge {
+            background: #007bff;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .review-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #f1f3f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+        .meta-item strong {
+            display: block;
+            color: #6c757d;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+        .ratings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .rating-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .rating-label {
+            font-size: 0.85em;
+            color: #666;
+        }
+        .rating-bar-container {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .rating-bar {
+            height: 100%;
+            background: #28a745;
+        }
+        .content-section {
+            margin-bottom: 15px;
+        }
+        .content-section strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        .pros { color: #28a745; }
+        .cons { color: #dc3545; }
+        .recommendation {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'RateMyHospital:home' %}" class="back-link">← Back to Search</a>
+    
+    <div class="header">
+        <h1>🏥 {{ hospital.name }}</h1>
+        <p class="address">📍 {{ hospital.full_address }}</p>
+    </div>
+
+    <div class="reviews-section">
+        <h3>Reviews ({{ reviews.count }})</h3>
+        {% for review in reviews %}
+            <div class="review-card">
+                <div class="review-header">
+                    <div>
+                        <div class="job-title">{{ review.job_title }}</div>
+                        <div style="color: #6c757d;">{{ review.department }} | {{ review.years_of_experience }} Exp</div>
+                    </div>
+                    <div class="rating-badge">★ {{ review.overall_rating }}</div>
+                </div>
+
+                <div class="review-meta">
+                    <div class="meta-item">
+                        <strong>Salary/Rate</strong>
+                        ${{ review.hourly_rate }}/hr or ${{ review.annual_salary|default:"N/A" }}
+                    </div>
+                    <div class="meta-item">
+                        <strong>Pay Type</strong>
+                        {{ review.get_pay_type_display }}
+                    </div>
+                    <div class="meta-item">
+                        <strong>Posted On</strong>
+                        {{ review.date_posted }}
+                    </div>
+                </div>
+
+                <div class="ratings-grid">
+                    {% with ratings="work_life_balance,salary_benefits,management,workplace_happiness,career_growth,staffing_levels,patient_care_quality,safety,training_support" %}
+                    <div class="rating-item">
+                        <span class="rating-label">Work-Life Balance: {{ review.work_life_balance }}</span>
+                        <div class="rating-bar-container"><div class="rating-bar" style="width: {% widthratio review.work_life_balance 5 100 %}%;"></div></div>
+                    </div>
+                    <div class="rating-item">
+                        <span class="rating-label">Management: {{ review.management }}</span>
+                        <div class="rating-bar-container"><div class="rating-bar" style="width: {% widthratio review.management 5 100 %}%;"></div></div>
+                    </div>
+                    <div class="rating-item">
+                        <span class="rating-label">Career Growth: {{ review.career_growth }}</span>
+                        <div class="rating-bar-container"><div class="rating-bar" style="width: {% widthratio review.career_growth 5 100 %}%;"></div></div>
+                    </div>
+                    <div class="rating-item">
+                        <span class="rating-label">Staffing Levels: {{ review.staffing_levels }}</span>
+                        <div class="rating-bar-container"><div class="rating-bar" style="width: {% widthratio review.staffing_levels 5 100 %}%;"></div></div>
+                    </div>
+                    {% endwith %}
+                </div>
+
+                <div class="content-section">
+                    <strong class="pros">Pros</strong>
+                    {{ review.pros }}
+                </div>
+                <div class="content-section">
+                    <strong class="cons">Cons</strong>
+                    {{ review.cons }}
+                </div>
+
+                <div class="recommendation">
+                    {% if review.would_recommend %}
+                        ✅ Would recommend this facility
+                    {% else %}
+                        ❌ Would not recommend this facility
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No reviews available for this hospital yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
