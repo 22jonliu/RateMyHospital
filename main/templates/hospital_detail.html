@@ -199,3 +199,100 @@
     </div>
 </body>
 </html>
+
+
+
+<!-- ADD THIS to hospital_detail.html, after the reviews section -->
+
+<div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 40px;">
+    <h3>Write a Review</h3>
+    <p id="form-message" style="color: green;"></p>
+
+    <label>Job Title</label><br>
+    <input type="text" id="job_title" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Department</label><br>
+    <input type="text" id="department" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Years of Experience</label><br>
+    <input type="text" id="years_of_experience" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Pay Type</label><br>
+    <select id="pay_type" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+        <option value="hourly">Hourly</option>
+        <option value="salary">Salary</option>
+    </select><br>
+
+    <label>Hourly Rate ($)</label><br>
+    <input type="number" id="hourly_rate" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Annual Salary ($)</label><br>
+    <input type="number" id="annual_salary" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <!-- Ratings -->
+    <label>Overall Rating (1-5)</label><br>
+    <input type="number" id="overall_rating" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Work-Life Balance (1-5)</label><br>
+    <input type="number" id="work_life_balance" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Management (1-5)</label><br>
+    <input type="number" id="management" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Career Growth (1-5)</label><br>
+    <input type="number" id="career_growth" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Staffing Levels (1-5)</label><br>
+    <input type="number" id="staffing_levels" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+    <label>Pros</label><br>
+    <textarea id="pros" rows="3" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea><br>
+
+    <label>Cons</label><br>
+    <textarea id="cons" rows="3" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea><br>
+
+    <label>Would you recommend this facility?</label><br>
+    <select id="would_recommend" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select><br>
+
+    <button onclick="submitReview()" style="background:#007bff; color:white; padding:12px 30px; border:none; border-radius:8px; font-size:16px; cursor:pointer;">
+        Submit Review
+    </button>
+</div>
+
+<script>
+    const hospitalId = {{ hospital.pk }};  // Django passes the hospital ID in
+
+    async function submitReview() {
+        const data = {
+            job_title: document.getElementById('job_title').value,
+            department: document.getElementById('department').value,
+            years_of_experience: document.getElementById('years_of_experience').value,
+            pay_type: document.getElementById('pay_type').value,
+            hourly_rate: document.getElementById('hourly_rate').value,
+            annual_salary: document.getElementById('annual_salary').value,
+            overall_rating: document.getElementById('overall_rating').value,
+            work_life_balance: document.getElementById('work_life_balance').value,
+            management: document.getElementById('management').value,
+            career_growth: document.getElementById('career_growth').value,
+            staffing_levels: document.getElementById('staffing_levels').value,
+            pros: document.getElementById('pros').value,
+            cons: document.getElementById('cons').value,
+            would_recommend: document.getElementById('would_recommend').value === 'true',
+        };
+
+        const response = await fetch(`/hospital/${hospitalId}/submit/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        document.getElementById('form-message').textContent = result.message;
+
+        // Reload to show the new review
+        setTimeout(() => location.reload(), 1000);
+    }
+</script>
