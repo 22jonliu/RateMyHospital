@@ -1,77 +1,62 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RateMyHospital - Search</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: #f8f9fa;
-            color: #333;
-        }
-        .search-container {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        h1 {
-            color: #2c3e50;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        .search-box {
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 18px;
-            border: 2px solid #ddd;
-            border-radius: 30px;
-            outline: none;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-        }
-        .search-box:focus {
-            border-color: #007bff;
-        }
-        .results-list {
-            list-style: none;
-            padding: 0;
-        }
-        .result-item {
-            background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-            display: block;
-            text-decoration: none;
-            color: inherit;
-        }
-        .result-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .hospital-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 5px;
-        }
-        .hospital-meta {
-            color: #6c757d;
-            font-size: 14px;
-        }
-        .no-results {
-            text-align: center;
-            color: #6c757d;
-            margin-top: 20px;
-        }
-    </style>
+    <title>Rate my Hospital</title>
+    <link rel="stylesheet" href="{% static 'homeStyle.css' %}">
 </head>
+
 <body>
+    <div class="home-wrapper">
+        <h2> Rate My Hospital</h2>
+
+        <!----
+        <div class="search-container">
+            <input id="nameInput" type="text" placeholder="Search hospital">
+            <button id="searchButton">Search</button>
+        </div> 
+        
+
+        <div id="resultContainer"> </div>
+        -->
+
+    </div>
+
+
+
+
+
+    <div class="vertical-bar">
+        <img src="{% static 'images/RodOfAsclepiusPerfect.png' %}">
+    </div>
+    <div class="vertical-outlineTopLeft"></div>
+    <div class="vertical-outlineTopRight"></div>
+    <div class="vertical-outlineBottomRight"></div>
+    <div class="vertical-outlineBottomLeft"></div>
+
+    <div class="horizontal-bar">
+        <a href="login.html" class="nav-link">Login/Signup</a>
+        <a href="Review.html" class="nav-link">Reviews</a>      <!-- Review.html's content is inside homepg.html so change name when needed-->
+    </div>
+    
+    <div class="horizontal-outlineTopLeft"></div>
+    <div class="horizontal-outlineTopRight"></div>
+    <div class="horizontal-outlineBottomRight"></div>
+    <div class="horizontal-outlineBottomLeft"></div>
+
+    
+
+   <!--- <script src="{% static 'scriptSearch.js' %}"></script> -->
+
+
+
+
+
+
     <div class="search-container">
         <h1>🏥 RateMyHospital</h1>
         <p>Find and review healthcare facilities</p>
