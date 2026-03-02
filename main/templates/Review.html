@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-
+{% load static %}
 <html lang="en">
 
 <head> 
     <meta charset="UTF-8">
 
     <title> This is the review page </title>
-    <link rel ="stylesheet" href="reviewpageStyle.css">
+    <link rel ="stylesheet" href="{% static 'reviewpageStyle.css' %}">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
 
  </div>
 
-    <script src="reviewpage.js"></script>
+    <script src="{% static 'reviewpage.js' %}"></script>
 
     
 </body>
