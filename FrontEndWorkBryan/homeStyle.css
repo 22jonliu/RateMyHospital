@@ -6,169 +6,56 @@
 
 /* Page layout */
 body {
+  margin: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 0.5fr minmax(90px, 12vw) 4fr;
+  grid-template-rows: 1fr  minmax(80px, 15vh) 1fr;
   font-family: Arial, sans-serif;
   background-color: #fcfcfc;
-  height: 100vh;
-  display: flex;
-  justify-content: center;   /* horizontal center */
-  align-items: center;       /* vertical center */
-  background-image: url("Images/Patient-Doctor\ .jpg");
+  background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("Images/Patient-Doctor\ .jpg");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
 }
 
 
 /* Vertical part of cross with outlines*/
 .vertical-bar {
-    height: 100%;
-    width: 200px;
+    grid-column: 2;
+    grid-row: 1/4;
     background-color: #3498db;
-    position: absolute;
-    left: 25%;
-    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     z-index: 2;
-    transform: translateX(-50%);
+    
 }
 
 .vertical-bar img {
-    width: 350px;
-    justify-content: center;
-    padding-right: 60%;
-    padding-top: -150px;
-    height: 95%;
+    height: 85%;
+    width: auto;
+    max-width: 85%;
 }
 
-.vertical-outlineTopLeft{
-    position: absolute;
-    top: 0;
-    left: 19.8%;
-    width: 20px;
-    height: 42%;
-    background-color: black;
-    z-index: 1;
-    transform: translateX(-50%);
-}
-
-.vertical-outlineTopRight{
-    position: absolute;
-    top: 0;
-    left: 30.2%;
-    width: 20px;
-    height: 42%;
-    background-color: black;
-    z-index: 1;
-    transform: translateX(-50%);
-}
-
-.vertical-outlineBottomRight{
-    position: absolute;
-    top: 58%;
-    left: 30.2%;
-    width: 20px;
-    height: 42%;
-    background-color: black;
-    z-index: 1;
-    transform: translateX(-50%);
-}
-
-.vertical-outlineBottomLeft{
-    position: absolute;
-    top: 58%;
-    left: 19.8%;
-    width: 20px;
-    height: 42%;
-    background-color: black;
-    z-index: 1;
-    transform: translateX(-50%);
-}
-/*End of Vertical Bar*/
 
 
 
 /*Horizontal part of cross with outlines*/
 .horizontal-bar{
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100vw;
-    height: 150px;
+    grid-column: 1/4;
+    grid-row: 2;
     background-color: #3498db;
-    transform: translateY(-50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 80px;
-    padding-top: 95px;
-    padding-left: 270px;
-}
-
-.horizontal-outlineTopLeft{
-    position: absolute;
-    top: 41.5%;
-    left: 10%;
-    width: 20%;
-    height: 0.9%;
-    background-color: black;
+    gap: 60px;
     z-index: 1;
-    transform: translateX(-50%);
+      
 }
 
-.horizontal-outlineTopRight{
-    position: absolute;
-    top: 41.5%;
-    left: 65%;
-    width: 70%;
-    height: 0.9%;
-    background-color: black;
-    z-index: 1;
-    transform: translateX(-50%);
-}
-
-.horizontal-outlineBottomRight{
-    position: absolute;
-    top: 58%;
-    left: 65%;
-    width: 70%;
-    height: 0.9%;
-    background-color: black;
-    z-index: 1;
-    transform: translateX(-50%);
-}
-
-.horizontal-outlineBottomLeft{
-    position: absolute;
-    top: 58%;
-    left: 10%;
-    width: 20%;
-    height: 0.9%;
-    background-color: black;
-    z-index: 1;
-    transform: translateX(-50%);
-}
-/*End of Horizontal Bar*/
 
 
-/* Wrapper for homepage content */
-.home-wrapper {
-  text-align: center;
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;   /* space between title and search section */
-  z-index: 2;
-}
-
-/* Headings */
-h1 {
-  color: #000000;
-  font-size: 100px;
-  position: absolute;
-  top: 30%;
-  left: 40%;
-}
 
 /* Search container */
 .search-container {
@@ -195,9 +82,6 @@ button {
   cursor: pointer;
   font-weight: bold;
   font-size: 30px;
-  position: absolute;
-  top: 50%;
-  left: 70%;
 }
 
 button:hover {
@@ -227,7 +111,19 @@ button:hover {
 .nav-link {
     text-decoration: none;
     color: #000000;
-    font-size: 54px;
+    font-size: clamp(18px, 4vw, 54px);
     font-weight: bold;
   
+}
+
+.title{
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: start;
+  align-self: end;
+
+  transform: translateY(1.6vh);
+  
+  font-size: 3.5vw;
+  z-index: 3;
 }
