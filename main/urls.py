@@ -1,13 +1,13 @@
 from django.urls import path
 from . import views
 
-app_name = 'RateMyHospital'
 
-from django.urls import path, include
-from . import views
+app_name = 'main'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('reviews/', views.reviews, name='reviews'),
+    path('api/facilities/', views.facility_list_api, name='facility_list_api'),
     path('hospital/<int:pk>/', views.hospital_detail, name='hospital_detail'),
-    path('', include('reviews.urls')),
+    path('hospital/<int:pk>/review/', views.submit_review, name='submit_review'),
 ]

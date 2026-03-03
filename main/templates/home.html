@@ -40,7 +40,7 @@
 
     <div class="horizontal-bar">
         <a href="login.html" class="nav-link">Login/Signup</a>
-        <a href="Review.html" class="nav-link">Reviews</a>      <!-- Review.html's content is inside homepg.html so change name when needed-->
+        <a href="{% url 'main:reviews' %}" class="nav-link">Reviews</a>      <!-- Review.html's content is inside homepg.html so change name when needed-->
     </div>
     
     <div class="horizontal-outlineTopLeft"></div>
@@ -60,7 +60,7 @@
     <div class="search-container">
         <h1>🏥 RateMyHospital</h1>
         <p>Find and review healthcare facilities</p>
-        <form action="{% url 'RateMyHospital:home' %}" method="get">
+        <form action="{% url 'main:home' %}" method="get">
             <input type="text" name="q" class="search-box" placeholder="Search by hospital name or city..." value="{{ query|default:'' }}">
         </form>
     </div>
@@ -68,7 +68,7 @@
     {% if query %}
         <div class="results-list">
             {% for facility in facilities %}
-                <a href="{% url 'RateMyHospital:hospital_detail' facility.pk %}" class="result-item">
+                <a href="{% url 'main:hospital_detail' facility.pk %}" class="result-item">
                     <div class="hospital-name">{{ facility.name }}</div>
                     <div class="hospital-meta">📍 {{ facility.city }}, {{ facility.state }} | {{ facility.full_address }}</div>
                 </a>

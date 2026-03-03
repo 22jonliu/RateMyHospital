@@ -1,28 +1,64 @@
 body {
-    font-family:  Arial, sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
 }
 
-h1{
+h1 {
     text-align: center;
+    margin-top: 50px;
+    font-size: 2.5rem;
+    color: #2c3e50;
 }
 
 /*the boxes grouped */
-#hospitalContainer{
-    max-width: 700px;
-    margin: 0px auto;
+#hospitalContainer {
+    max-width: 1000px;
+    margin: 30px auto;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px;
 }
 
 /* the box */
-.hospital-card{
-  border: 3px solid black;
-  background-color: white;
-  padding: 20px;
-  
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
+.hospital-card {
+    border: 1px solid #ddd;
+    background-color: white;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hospital-card:hover {
+    transform: translateY(-5px);
+}
+
+.hospital-card h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.4rem;
+    color: #007bff;
+}
+
+.hospital-info p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.review-btn {
+    text-align: center;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.review-btn:hover {
+    background: #0056b3 !important;
 }
 
 /*Search bar location */
@@ -30,15 +66,26 @@ h1{
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
+    margin-top: 20px;
 }
 
 /*search bar itself */
-#searchInput{
-    width: 10%;
-    font-size: 20px;
+#searchInput {
+    width: 60%;
+    max-width: 500px;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: 2px solid #007bff;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/*grouped the hospital squares and search bar to move together (seemed easier) */
+#searchInput:focus {
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+/*grouped the hospital squares and search bar to move together */
 .page-content {
-    margin-top: 40vh;
+    min-height: 100vh;
 }
