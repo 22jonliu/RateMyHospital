@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+:root{
+    --accent-color: blue;
+    --base-color: white;
+    --text-color: grey;
+    --input-color: green;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+html{
+    font-family: 'Open Sans',sans-serif;
+    font-size:12pt;
+    color: var(--text-color);
+    text-align: center;
+
+}
+body{
+    min-height: 100vh;
+    background-image: url(../templates/login-signup-img.jpg);
+    background-size: cover;
+    background-position:center;
+    display:flex;
+    justify-content: center; 
+    align-items: center;
+    overflow: hidden;
+}
+.wrapper{
+    background-color: rgba(255, 255, 255, 0.9); /* White with 90% opacity so you see the bg slightly */
+    padding: 40px;
+    border-radius: 15px;      /* Rounds the corners */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* Gives it depth */
+    width: 100%;
+    max-width: 400px;         /* Keeps the box from getting too wide */
+    text-align: center;
+}
+
+
+form > div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Adds breathing room between rows */
+}
+
+label {
+    color: #333;
+    font-weight: bold;
+    width: 40px;         /* Forces every icon/text area to be same width */
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;      /* Keeps the label from squishing on small screens */
+}
+
+/* Targets the @ specifically to make it look consistent with icons */
+label span {
+    font-size: 1.3rem;
+}
+
+label svg {
+    fill: #333;
+    width: 24px;
+    height: 24px;
+}
+
+input {
+    flex-grow: 1;        /* Tells the input to take up all remaining space */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline-color: var(--accent-color);
+}
