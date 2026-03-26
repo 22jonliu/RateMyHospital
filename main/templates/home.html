@@ -1,8 +1,9 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,60 +12,83 @@
 </head>
 
 <body>
-    <div class="home-wrapper">
-        <h2> Rate My Hospital</h2>
 
-        <!----
-        <div class="search-container">
-            <input id="nameInput" type="text" placeholder="Search hospital">
-            <button id="searchButton">Search</button>
-        </div> 
+ <header class="header"> 
+
+     <div class="Title">Rate My Hospital</div>
+
+     <div class="nav-links"> 
+        <a href="login.html" class="signup-button">Login/Signup</a>
+        <a href="{% url 'main:reviews' %}" class="nav-link">Reviews</a>      <!-- Review.html's content is inside homepg.html so change name when needed-->
+     </div>
+
+    </header>
+
+<div class="home-wrapper">
+
+   
+  <div class="top-section"> 
+    <div class="Quote"> 
+        <h1>For those who come after</h1>
+     </div>
+
+     <div class="search-container">
+        <form action="{%url 'main:home' %}" method="get" class="search-form">
+            <input type="text" name="q" class="search-bar"
+            placeholder="Search hospitals"
+            value="{{query|default:''}}">
+        </form>
+        
         
 
-        <div id="resultContainer"> </div>
-        -->
+        </div>
+  </div>
 
-    </div>
+     <div class="top-rated"> 
+
+        <h2>Top Rated Hospitals</h2>
+        <div class="card-grids">
+            {% comment %}
+            {% for facility in facilities|slice:":3" %}
+                <div class="card">
+                    <h3> {{ facility.name }}</h3>
+                    <p>📍 {{facility.city }}, {{ facility.state}} </p>
+                </div>
+                {% endfor %}
+                {% endcomment %}
+
+            <div class="card">
+                <h3> St. Mary Medical center</h3>
+                <p>New York, NY</p>
+            </div>
+            <div class="card">
+                <h3>General hospital of seattle</h3>
+                <p>Seattle, WA</p>
+            </div>
+            <div class="card">
+                <h3> Metro Health Institute</h3>
+                <p>Chicago, IL</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p> Rate My Hospital helps you 
+                find the best workplace for your mental space.</p>
+        </div>
+     </div>
+
+        
+
+
+</div>
+
+
+  
 
 
 
-
-
-    <div class="vertical-bar">
-        <img src="{% static 'images/RodOfAsclepiusPerfect.png' %}">
-    </div>
-    <div class="vertical-outlineTopLeft"></div>
-    <div class="vertical-outlineTopRight"></div>
-    <div class="vertical-outlineBottomRight"></div>
-    <div class="vertical-outlineBottomLeft"></div>
-
-    <div class="horizontal-bar">
-        <a href="login.html" class="nav-link">Login/Signup</a>
-        <a href="{% url 'main:reviews' %}" class="nav-link">Reviews</a>      <!-- Review.html's content is inside homepg.html so change name when needed-->
-    </div>
     
-    <div class="horizontal-outlineTopLeft"></div>
-    <div class="horizontal-outlineTopRight"></div>
-    <div class="horizontal-outlineBottomRight"></div>
-    <div class="horizontal-outlineBottomLeft"></div>
-
-    
-
-   <!--- <script src="{% static 'scriptSearch.js' %}"></script> -->
-
-
-
-
-
-
-    <div class="search-container">
-        <h1> RateMyHospital</h1>
-        <p>Find and review healthcare facilities</p>
-        <form action="{% url 'main:home' %}" method="get">
-            <input type="text" name="q" class="search-box" placeholder="Search by hospital name or city..." value="{{ query|default:'' }}">
-        </form>
-    </div>
-
+    <!-- 
     {% if query %}
         <div class="results-list">
             {% for facility in facilities %}
@@ -76,6 +100,8 @@
                 <div class="no-results">No hospitals found matching "{{ query }}"</div>
             {% endfor %}
         </div>
+    
     {% endif %}
+    -->
 </body>
 </html>
