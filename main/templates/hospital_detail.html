@@ -199,63 +199,64 @@
     </div>
 
     <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 40px;">
-        <h3>Write a Review</h3>
-        <p id="form-message" style="color: green;"></p>
-    
+    <h3>Write a Review</h3>
+
+    <form method="POST" action="{% url 'RateMyHospital:submit_review' hospital.pk %}">
+        {% csrf_token %}
+
         <label>Job Title</label><br>
-        <input type="text" id="job_title" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="text" name="job_title" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Department</label><br>
-        <input type="text" id="department" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="text" name="department" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Years of Experience</label><br>
-        <input type="text" id="years_of_experience" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="text" name="years_of_experience" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Pay Type</label><br>
-        <select id="pay_type" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+        <select name="pay_type" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
             <option value="hourly">Hourly</option>
             <option value="salary">Salary</option>
         </select><br>
-    
+
         <label>Hourly Rate ($)</label><br>
-        <input type="number" id="hourly_rate" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="number" name="hourly_rate" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Annual Salary ($)</label><br>
-        <input type="number" id="annual_salary" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
-        <!-- Ratings -->
+        <input type="number" name="annual_salary" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Overall Rating (1-5)</label><br>
-        <input type="number" id="overall_rating" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="number" name="overall_rating" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Work-Life Balance (1-5)</label><br>
-        <input type="number" id="work_life_balance" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="number" name="work_life_balance" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Management (1-5)</label><br>
-        <input type="number" id="management" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="number" name="management" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Career Growth (1-5)</label><br>
-        <input type="number" id="career_growth" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="number" name="career_growth" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Staffing Levels (1-5)</label><br>
-        <input type="number" id="staffing_levels" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
+        <input type="number" name="staffing_levels" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
         <label>Pros</label><br>
-        <textarea id="pros" rows="3" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea><br>
-    
+        <textarea name="pros" rows="3" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea><br>
+
         <label>Cons</label><br>
-        <textarea id="cons" rows="3" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea><br>
-    
+        <textarea name="cons" rows="3" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea><br>
+
         <label>Would you recommend this facility?</label><br>
-        <select id="would_recommend" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+        <select name="would_recommend" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+            <option value="True">Yes</option>
+            <option value="False">No</option>
         </select><br>
-    
-        <button onclick="submitReview()" style="background:#007bff; color:white; padding:12px 30px; border:none; border-radius:8px; font-size:16px; cursor:pointer;">
+
+        <button type="submit" style="background:#007bff; color:white; padding:12px 30px; border:none; border-radius:8px; font-size:16px; cursor:pointer;">
             Submit Review
         </button>
-    </div>
-
+    </form>
+</div>
     <script>
         const hospitalId = {{ hospital.pk }};  // Django passes the hospital ID in
 
