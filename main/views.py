@@ -1,10 +1,13 @@
 from datetime import date
-from django.shortcuts import render, get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from .models import Facility, Review
 from django.db.models import Q
 import json
-from django.http import JsonResponse   
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 def home(request):
         #Home page with search functionality
     query = request.GET.get('q')
@@ -13,6 +16,7 @@ def home(request):
         facilities = Facility.objects.filter(
             Q(name__icontains=query) | Q(city__icontains=query)
         )
+        
     
     return render(request, 'home.html', {
         'facilities': facilities,
@@ -80,3 +84,24 @@ def submit_review(request, pk):
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'POST required'}, status=400)
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('RateMyHospital:home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('RateMyHospital:home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
