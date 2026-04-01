@@ -10,7 +10,7 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
-            background-color: #3498db;
+            background-color: #FFFDD0;
             color: #333;
         }
         .header {
@@ -132,10 +132,15 @@
         <h3>Reviews ({{ reviews.count }})</h3>
         {% for review in reviews %}
             <div class="review-card">
-                <div class="review-header">
-                    <div>
-                        <div class="job-title">{{ review.job_title }}</div>
-                        <div style="color: #6c757d;">{{ review.department }} | {{ review.years_of_experience }} Exp</div>
+                <div class="review-header"> 
+                    <div class=" review-user"> <!--Here is the user deatils where we pull their proffesion and years worked from their info, pneding work-->
+                        <div class="user-role">
+                            {{ review.user.profile.profession }} <!--temp filler-->
+                        </div>
+                        <div class="experience">
+                            {{ review.user.profile.years_experience }} <!--temp filler, waiting for account details-->
+                        </div>
+                        
                     </div>
                     <div class="rating-badge">★ {{ review.overall_rating }}</div>
                 </div>
@@ -198,18 +203,12 @@
         {% endfor %}
     </div>
 
+    {% if user.is_authenticated %} <!--only logged in users can make the reviews-->
     <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 40px;">
         <h3>Write a Review</h3>
         <p id="form-message" style="color: green;"></p>
     
-        <label>Job Title</label><br>
-        <input type="text" id="job_title" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
-        <label>Department</label><br>
-        <input type="text" id="department" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
-    
-        <label>Years of Experience</label><br>
-        <input type="text" id="years_of_experience" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+        
     
         <label>Pay Type</label><br>
         <select id="pay_type" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
@@ -256,14 +255,17 @@
         </button>
     </div>
 
+    {% else %} <!--If they dont have an account, this triggers them to login/signup-->
+    <div class="card" style="text-align:center;">
+        <h3>Want to leave a review?</h3>
+        <a href="login.html" class="login-btn">Login</a>
+    </div>
+    {% endif %}
     <script>
         const hospitalId = {{ hospital.pk }};  // Django passes the hospital ID in
 
         async function submitReview() {
             const data = {
-                job_title: document.getElementById('job_title').value,
-                department: document.getElementById('department').value,
-                years_of_experience: document.getElementById('years_of_experience').value,
                 pay_type: document.getElementById('pay_type').value,
                 hourly_rate: document.getElementById('hourly_rate').value,
                 annual_salary: document.getElementById('annual_salary').value,

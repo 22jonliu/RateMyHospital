@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset ="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/otp_verification.css">
+    <title>OTP verify form</title>
+</head>
+    <body>
+        <form class "otpForm">
+            <h2>Enter OTP</h2>
+            <p>
+                A verification code has been sent to your email
+            </p>
+            <div class="otp-container">
+                <input type="text" class="otpInput"
+                id="otpInput1" maxlength="1" required>
+                <input type="text" class="otpInput"
+                id="otpInput2" maxlength="1" required>
+                <input type="text" class="otpInput"
+                id="otpInput3" maxlength="1" required>
+                <input type="text" class="otpInput"
+                id="otpInput4" maxlength="1" required>
+
+            </div>
+
+            <button id="verifyBtn" 
+            class="submit">verify</button>
+            <p>Didn't receive the code?</p>
+            <button id="resendCode" type="button">Resend Code</button>
+
+            <button type="button">
+                &#10006
+            </button>
+        </form>
+    </body>    
+</html>
