@@ -10,4 +10,6 @@ urlpatterns = [
     path('api/facilities/', views.facility_list_api, name='facility_list_api'),
     path('hospital/<int:pk>/', views.hospital_detail, name='hospital_detail'),
     path('hospital/<int:pk>/review/', views.submit_review, name='submit_review'),
+    path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
 ]
