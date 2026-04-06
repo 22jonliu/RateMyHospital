@@ -5,12 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ hospital.name }} - Reviews</title>
     <style>
+        .recommendation {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rec-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 15px 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+        .back-link {
+            margin: 0;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
-            background-color: #FFFDD0;
+            padding: 80px 20px 40px 20px;
+            background-color: #3498db;
             color: #333;
         }
         .header {
@@ -121,11 +153,14 @@
     </style>
 </head>
 <body>
-    <a href="{% url 'main:home' %}" class="back-link">← Back to Search</a>
+    <div class="top-bar">
+        <a href="{% url 'main:home' %}" class="back-link">← Back to Search</a>
+    </div>
+    
     
     <div class="header">
-        <h1>🏥 {{ hospital.name }}</h1>
-        <p class="address">📍 {{ hospital.full_address }}</p>
+        <h1> {{ hospital.name }}</h1>
+        <p class="address"> {{ hospital.full_address }}</p>
     </div>
 
     <div class="reviews-section">
@@ -192,9 +227,28 @@
 
                 <div class="recommendation">
                     {% if review.would_recommend %}
-                        ✅ Would recommend this facility
+                        <svg class="rec-icon" viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="1" fill="rgb(44,169,188)"></rect>
+                            <polyline points="16 9.5 11 14.5 8 11.5"
+                                fill="none"
+                                stroke="black"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"></polyline>
+                            <rect x="3" y="3" width="18" height="18" rx="1"
+                                fill="none"
+                                stroke="black"
+                                stroke-width="2"></rect>
+                        </svg>
+                         Would recommend this facility
                     {% else %}
-                        ❌ Would not recommend this facility
+                        <svg class="rec-icon" viewBox="0 0 24 24">
+                            <path fill="#b24040" d="M23,12A11,11,0,0,1,1,12a10.827,10.827,0,0,1,.29-2.5,11,11,0,0,1,21.42,0A10.827,10.827,0,0,1,23,12Z"/>
+                            <ellipse fill="#ce5959" cx="12" cy="9.5" rx="10.71" ry="8.5"/>
+                            <path fill="#6c2e7c" d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z"/>
+                            <path fill="#6c2e7c" d="M16.707,7.293a1,1,0,0,0-1.414,0L12,10.586,8.707,7.293A1,1,0,1,0,7.293,8.707L10.586,12,7.293,15.293a1,1,0,1,0,1.414,1.414L12,13.414l3.293,3.293a1,1,0,0,0,1.414-1.414L13.414,12l3.293-3.293A1,1,0,0,0,16.707,7.293Z"/>
+                        </svg>
+                         Would not recommend this facility
                     {% endif %}
                 </div>
             </div>
@@ -255,11 +309,6 @@
         </button>
     </div>
 
-    {% else %} <!--If they dont have an account, this triggers them to login/signup-->
-    <div class="card" style="text-align:center;">
-        <h3>Want to leave a review?</h3>
-        <a href="login.html" class="login-btn">Login</a>
-    </div>
     {% endif %}
     <script>
         const hospitalId = {{ hospital.pk }};  // Django passes the hospital ID in
