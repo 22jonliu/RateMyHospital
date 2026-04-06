@@ -8,9 +8,7 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #fcfcfc;
-  
 }
-
 
 /* Wrapper for homepage content */
 .home-wrapper {
@@ -19,7 +17,6 @@ body {
   width: 100%;
   padding: 0 20px;
 }
-
 
 /* Header */
 .header {
@@ -45,14 +42,13 @@ body {
   margin-top: 30px;
 }
 
-.footer{
+.footer {
   display: grid;
   justify-items: center;
   padding: 40px 20px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 14px;
 }
-
 
 /* Headings */
 h1 {
@@ -66,41 +62,40 @@ h1 {
   display: grid;
   justify-items: center;
   gap: 12px;
-  
+  position: relative;
 }
 
 /* Input fields */
 input {
   padding: 12px;
-
 }
 
-/*search hospital searchbar */
+/* Search hospital searchbar */
 .search-bar {
   width: 100%;
-  max-width: 600px;
   padding: 14px;
   border-radius: 16px 20px;
   border: 1px solid black;
   font-size: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
-.search-bar:focus{
+
+.search-bar:focus {
   outline: none;
 }
 
-.top-rated{
+.top-rated {
   display: grid;
   justify-items: center;
   gap: 20px;
   margin-top: 60px;
 }
 
-.top-rated h2{
+.top-rated h2 {
   font-size: 30px;
 }
 
-.card-grids{
+.card-grids {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
@@ -108,7 +103,7 @@ input {
   max-width: 900px;
 }
 
-.card{
+.card {
   background: white;
   padding: 20px;
   border-radius: 12px;
@@ -117,11 +112,11 @@ input {
   gap: 10px;
 }
 
-.top-section{
+.top-section {
   padding: 80px 20px;
   text-align: center;
-  background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url("/static/images/blurred-hospital.jpg") center/cover no-repeat;
-
+  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)),
+    url("/static/images/blurred-hospital.jpg") center/cover no-repeat;
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.8);
@@ -139,7 +134,6 @@ button {
   cursor: pointer;
   font-weight: bold;
   font-size: 12px;
-
 }
 
 button:hover {
@@ -150,14 +144,14 @@ button:hover {
   padding: 8px 14px;
   font-size: 14px;
   background-color: #000000;
-  color:white;
+  color: white;
   border-radius: 8px;
 }
 
 /* Results container */
 #resultsContainer {
-  margin-top: 80px;   /* pushes results about an inch lower */
-  min-height: 40px;   /* prevents layout jump */
+  margin-top: 80px;
+  min-height: 40px;
 }
 
 /* Search result links */
@@ -170,24 +164,77 @@ button:hover {
   font-weight: bold;
 }
 
-/*link stuffs to edit :) */
 .result-link:hover {
   text-decoration: underline;
 }
 
-.nav-links{
+/* Nav links */
+.nav-links {
   grid-column: 3;
   justify-self: end;
   display: grid;
   grid-auto-flow: column;
   gap: 20px;
-
 }
 
-
 .nav-link {
-    color: #000000;
-    font-size: 16px;
-    font-weight: bold;
-  
+  color: #000000;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Search form & dropdown */
+.search-form {
+  position: relative;
+  width: 600px;
+  z-index: 1000;
+}
+
+.search-bar {
+  width: 100%;
+}
+
+.results-dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 200px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  color: #333;
+  padding: 14px 20px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.dropdown-meta {
+  font-size: 12px;
+  color: #7f8c8d;
 }

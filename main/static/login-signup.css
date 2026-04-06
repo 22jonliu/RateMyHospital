@@ -20,9 +20,7 @@ html{
 }
 body{
     min-height: 100vh;
-    background-image: url(../templates/login-signup-img.jpg);
-    background-size: cover;
-    background-position:center;
+    background-color: #f0f4f8;
     display:flex;
     justify-content: center; 
     align-items: center;

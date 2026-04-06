@@ -2,8 +2,9 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-    
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,45 +14,51 @@
 
 <body>
 
- <header class="header"> 
+    <header class="header">
 
-     <div class="Title">Rate My Hospital</div>
+        <div class="Title">Rate My Hospital</div>
 
-     <div class="nav-links"> 
-        <a href="login.html" class="signup-button">Login/Signup</a>
-        <a href="{% url 'main:reviews' %}" class="nav-link">Reviews</a> 
-        <a href="{% url 'main:login' %}" class="nav-link">Login</a> 
-             <!-- Review.html's content is inside homepg.html so change name when needed-->
-     </div>
+        <div class="nav-links">
+            {% if request.user.is_authenticated %}
+            <span class="nav-link">Welcome, {{ request.user.username }}</span>
+            <a href="{% url 'main:reviews' %}" class="nav-link">Reviews</a>
+            <a href="{% url 'main:logout' %}" class="nav-link">Logout</a>
+            {% else %}
+            <a href="{% url 'main:signup' %}" class="signup-button">Login/Signup</a>
+            <a href="{% url 'main:reviews' %}" class="nav-link">Reviews</a>
+            <a href="{% url 'main:login' %}" class="nav-link">Login</a>
+            {% endif %}
+            <!-- Review.html's content is inside homepg.html so change name when needed-->
+        </div>
 
     </header>
 
-<div class="home-wrapper">
+    <div class="home-wrapper">
 
-   
-  <div class="top-section"> 
-    <div class="Quote"> 
-        <h1>For those who come after</h1>
-     </div>
 
-     <div class="search-container">
-        <form action="{%url 'main:home' %}" method="get" class="search-form">
-            <input type="text" name="q" class="search-bar"
-            placeholder="Search hospitals"
-            value="{{query|default:''}}">
-        </form>
-        
-        
+        <div class="top-section">
+            <div class="Quote">
+                <h1>For those who come after</h1>
+            </div>
 
+            <div class="search-container">
+                <form action="{% url 'main:home' %}" method="get" class="search-form" id="search-form">
+                    <input type="text" name="q" class="search-bar" id="search-input" placeholder="Search hospitals"
+                        value="{{ query|default:'' }}" autocomplete="off">
+                    <div id="search-results" class="results-dropdown"></div>
+                </form>
+
+
+
+            </div>
         </div>
-  </div>
 
-     <div class="top-rated"> 
+        <div class="top-rated">
 
-        <h2>Top Rated Hospitals</h2>
-        <div class="card-grids">
-            {% comment %}
-            {% for facility in facilities|slice:":3" %}
+            <h2>Top Rated Hospitals</h2>
+            <div class="card-grids">
+                {% comment %}
+                {% for facility in facilities|slice:":3" %}
                 <div class="card">
                     <h3> {{ facility.name }}</h3>
                     <p>📍 {{facility.city }}, {{ facility.state}} </p>
@@ -59,51 +66,88 @@
                 {% endfor %}
                 {% endcomment %}
 
-            <div class="card">
-                <h3> St. Mary Medical center</h3>
-                <p>New York, NY</p>
+                <div class="card">
+                    <h3> St. Mary Medical center</h3>
+                    <p>New York, NY</p>
+                </div>
+                <div class="card">
+                    <h3>General hospital of seattle</h3>
+                    <p>Seattle, WA</p>
+                </div>
+                <div class="card">
+                    <h3> Metro Health Institute</h3>
+                    <p>Chicago, IL</p>
+                </div>
             </div>
-            <div class="card">
-                <h3>General hospital of seattle</h3>
-                <p>Seattle, WA</p>
-            </div>
-            <div class="card">
-                <h3> Metro Health Institute</h3>
-                <p>Chicago, IL</p>
+
+            <div class="footer">
+                <p> Rate My Hospital helps you
+                    find the best workplace for your mental space.</p>
             </div>
         </div>
 
-        <div class="footer">
-            <p> Rate My Hospital helps you 
-                find the best workplace for your mental space.</p>
-        </div>
-     </div>
-
-        
-
-
-</div>
-
-
-  
 
 
 
-    
-    <!-- 
-    {% if query %}
-        <div class="results-list">
-            {% for facility in facilities %}
-                <a href="{% url 'main:hospital_detail' facility.pk %}" class="result-item">
-                    <div class="hospital-name">{{ facility.name }}</div>
-                    <div class="hospital-meta">📍 {{ facility.city }}, {{ facility.state }} | {{ facility.full_address }}</div>
-                </a>
-            {% empty %}
-                <div class="no-results">No hospitals found matching "{{ query }}"</div>
-            {% endfor %}
-        </div>
-    
-    {% endif %}
-    -->
+    </div>
+
+
+
+
+
+
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const resultsDropdown = document.getElementById('search-results');
+        let facilities = [];
+
+        // Fetch facilities once on load
+        fetch("{% url 'main:facility_list_api' %}")
+            .then(response => response.json())
+            .then(data => {
+                facilities = data;
+            });
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            resultsDropdown.innerHTML = '';
+
+            if (query.length < 1) {
+                resultsDropdown.style.display = 'none';
+                return;
+            }
+
+            const filtered = facilities.filter(f =>
+                f.name.toLowerCase().includes(query) ||
+                f.city.toLowerCase().includes(query)
+            ).slice(0, 8); // Limit results
+
+            if (filtered.length > 0) {
+                filtered.forEach(f => {
+                    const item = document.createElement('a');
+                    item.className = 'dropdown-item';
+                    item.href = `/hospital/${f.id}/`;
+                    item.innerHTML = `
+                        <span class="dropdown-name">${f.name}</span>
+                        <span class="dropdown-meta"> | ${f.city}</span>
+                    `;
+                    resultsDropdown.appendChild(item);
+                });
+                resultsDropdown.style.display = 'flex';
+            } else {
+                resultsDropdown.innerHTML = '<div class="dropdown-item">No hospitals found</div>';
+                resultsDropdown.style.display = 'flex';
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!document.getElementById('search-form').contains(e.target)) {
+                resultsDropdown.style.display = 'none';
+            }
+        });
+    </script>
 </body>
+
 </html>
