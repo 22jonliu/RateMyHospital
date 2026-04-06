@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="{% static 'login-signup.css' %}">
+    <style>
+        .profile-wrapper {
+            max-width: 500px;
+        }
+        .profile-form-group {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .profile-form-group label {
+            width: 100%;
+            justify-content: flex-start;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        .profile-input {
+            width: 100%;
+        }
+        .submit-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #777;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper profile-wrapper">
+        <h1>My Profile</h1>
+        <p style="margin-bottom: 25px;">Update your professional information</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="profile-form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <span style="color: red; font-size: 0.8rem;">{{ field.errors.0 }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <button type="submit" class="submit-btn">Save Changes</button>
+        </form>
+        
+        <a href="{% url 'main:home' %}" class="back-link">← Back to Home</a>
+    </div>
+</body>
+</html>

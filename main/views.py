@@ -2,7 +2,7 @@ from datetime import date
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from .models import Facility, Review
 from django.db.models import Q
@@ -110,3 +110,16 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('main:home')
+
+@login_required
+def profile_view(request):
+    profile = request.user.profile
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('main:profile')
+    else:
+        form = ProfileForm(instance=profile)
+    
+    return render(request, 'profile.html', {'form': form})
