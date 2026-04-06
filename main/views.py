@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .models import Facility, Review
+from .models import Facility, Review, UserProfile
 from django.db.models import Q
 import json
 from django.http import JsonResponse
@@ -105,3 +105,34 @@ def signup_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+
+@login_required(login_url='main:login')
+def profile_view(request):
+    """View for user profile page"""
+    try:
+        profile = request.user.profile
+    except UserProfile.DoesNotExist:
+        profile = UserProfile.objects.create(user=request.user)
+    
+    if request.method == 'POST':
+        request.user.first_name = request.POST.get('first_name', '')
+        request.user.last_name = request.POST.get('last_name', '')
+        request.user.save()
+        
+        profile.work_title = request.POST.get('work_title', '')
+        profile.years_of_experience = request.POST.get('years_of_experience', 0)
+        profile.save()
+        
+        return redirect('main:profile')
+    
+    return render(request, 'profile.html', {
+        'profile': profile,
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+    })
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('main:home')
