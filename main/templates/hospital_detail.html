@@ -257,7 +257,7 @@
         {% endfor %}
     </div>
 
-    {% if user.is_authenticated %} <!--only logged in users can make the reviews-->
+    <!--{% if user.is_authenticated %} 
     <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 40px;">
         <h3>Write a Review</h3>
         <p id="form-message" style="color: green;"></p>
@@ -276,7 +276,7 @@
         <label>Annual Salary ($)</label><br>
         <input type="number" id="annual_salary" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
     
-        <!-- Ratings -->
+        
         <label>Overall Rating (1-5)</label><br>
         <input type="number" id="overall_rating" min="1" max="5" step="0.1" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
     
@@ -309,8 +309,103 @@
         </button>
     </div>
 
-    {% endif %}
+    {% endif %}-->
+    <!-- Write Review Button -->
+    <div style="margin-top:40px;">
+        <button onclick="toggleReview()" 
+            style="background:#007bff; color:white; padding:12px 25px; border:none; border-radius:8px; cursor:pointer; font-size:16px;">
+            Write a Review
+        </button>
+    </div>
+
+    <!-- Not logged in message -->
+    <div id="login-message" style="display:none; background:white; padding:25px; border-radius:15px; margin-top:20px;">
+        <p style="margin-bottom:15px;">
+            Only logged in users can write a review.
+        </p>
+
+        <a href="{% url 'login' %}?next={{ request.path }}" 
+            style="background:#007bff; color:white; padding:10px 20px; border-radius:8px; text-decoration:none;">
+            Login
+        </a>
+    </div>
+
+    <!-- Review Form -->
+    <div id="review-form" 
+         style="display:none; background: white; padding: 30px; border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 20px;">
+
+        <h3>Write a Review</h3>
+        <p id="form-message" style="color: green;"></p>
+
+        <label>Pay Type</label><br>
+        <select id="pay_type" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+            <option value="hourly">Hourly</option>
+            <option value="salary">Salary</option>
+        </select><br>
+
+        <label>Hourly Rate ($)</label><br>
+        <input type="number" id="hourly_rate" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+        <label>Annual Salary ($)</label><br>
+        <input type="number" id="annual_salary" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+        <label>Overall Rating (1-5)</label><br>
+        <input type="number" id="overall_rating" min="1" max="5" step="0.1"
+            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+        <label>Work-Life Balance</label><br>
+        <input type="number" id="work_life_balance" min="1" max="5" step="0.1"
+            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+        <label>Management</label><br>
+        <input type="number" id="management" min="1" max="5" step="0.1"
+            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+        <label>Career Growth</label><br>
+        <input type="number" id="career_growth" min="1" max="5" step="0.1"
+            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+        <label>Staffing Levels</label><br>
+        <input type="number" id="staffing_levels" min="1" max="5" step="0.1"
+            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+
+        <label>Pros</label><br>
+        <textarea id="pros" rows="3"
+            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea><br>
+
+        <label>Cons</label><br>
+        <textarea id="cons" rows="3"
+            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"></textarea><br>
+
+        <label>Would you recommend?</label><br>
+        <select id="would_recommend"
+            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select><br>
+
+        <button onclick="submitReview()"
+            style="background:#007bff; color:white; padding:12px 30px; border:none; border-radius:8px; cursor:pointer;">
+            Submit Review
+        </button>
+    </div>
+
     <script>
+        <!--Here is permissions for authentication-->
+        function toggleReview() {
+
+            const isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
+
+            if (isAuthenticated) {
+                document.getElementById("review-form").style.display = "block";
+                document.getElementById("login-message").style.display = "none";
+            } 
+            else {
+                document.getElementById("login-message").style.display = "block";
+                document.getElementById("review-form").style.display = "none";
+            }
+        }
         const hospitalId = {{ hospital.pk }};  // Django passes the hospital ID in
 
         async function submitReview() {
