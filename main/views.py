@@ -8,7 +8,7 @@ from .models import Facility, Review
 from django.db.models import Q
 import json
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+
 def home(request):
         #Home page with search functionality
     query = request.GET.get('q')
@@ -46,7 +46,6 @@ def hospital_detail(request, pk):
         'reviews': reviews
     })
 
-@csrf_exempt
 def submit_review(request, pk):
     if request.method == 'POST':
         try:

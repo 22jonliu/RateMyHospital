@@ -337,6 +337,7 @@
 
         <h3>Write a Review</h3>
         <p id="form-message" style="color: green;"></p>
+        {% csrf_token %}
 
         <label>Pay Type</label><br>
         <select id="pay_type" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
@@ -425,7 +426,10 @@
 
             const response = await fetch(`/hospital/${hospitalId}/review/`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                },
                 body: JSON.stringify(data)
             });
 
