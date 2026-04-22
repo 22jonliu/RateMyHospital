@@ -25,7 +25,9 @@ class Review(models.Model):
         ('hourly', 'Hourly'),
         ('salary', 'Salary'),
     ]
-    
+    #user name for Review card, work in progress
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews")
+
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE, related_name='reviews')
     job_title = models.CharField(max_length=255)
     department = models.CharField(max_length=255)

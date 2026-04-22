@@ -61,6 +61,7 @@ def submit_review(request, pk):
                     return None
 
             Review.objects.create(
+                user=request.user,
                 facility=facility,
                 job_title=data.get('job_title', ''),
                 department=data.get('department', ''),

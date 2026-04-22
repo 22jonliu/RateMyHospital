@@ -169,12 +169,10 @@
             <div class="review-card">
                 <div class="review-header"> 
                     <div class=" review-user"> <!--Here is the user deatils where we pull their proffesion and years worked from their info, pneding work-->
-                        <div class="user-role">
-                            {{ review.user.profile.profession }} <!--temp filler-->
-                        </div>
-                        <div class="experience">
-                            {{ review.user.profile.years_experience }} <!--temp filler, waiting for account details-->
-                        </div>
+                        {{ review.user.first_name|default:review.user.username }}
+                        {{ review.user.last_name }}
+                        {{ review.user.profile.work_title }} 
+                        {{ review.user.profile.years_of_experience }} 
                         
                     </div>
                     <div class="rating-badge">★ {{ review.overall_rating }}</div>
