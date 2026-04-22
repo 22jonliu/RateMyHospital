@@ -337,7 +337,6 @@
 
         <h3>Write a Review</h3>
         <p id="form-message" style="color: green;"></p>
-        {% csrf_token %}
 
         <label>Pay Type</label><br>
         <select id="pay_type" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
@@ -352,24 +351,54 @@
         <input type="number" id="annual_salary" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
 
         <label>Overall Rating (1-5)</label><br>
-        <input type="number" id="overall_rating" min="1" max="5" step="0.1"
-            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+        <select id="overall_rating" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+            <option value="">-- Select --</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select><br>
 
         <label>Work-Life Balance</label><br>
-        <input type="number" id="work_life_balance" min="1" max="5" step="0.1"
-            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+        <select id="work_life_balance" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+            <option value="">-- Select --</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select><br>
 
         <label>Management</label><br>
-        <input type="number" id="management" min="1" max="5" step="0.1"
-            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+        <select id="management" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+            <option value="">-- Select --</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select><br>
 
         <label>Career Growth</label><br>
-        <input type="number" id="career_growth" min="1" max="5" step="0.1"
-            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+        <select id="career_growth" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+            <option value="">-- Select --</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select><br>
 
         <label>Staffing Levels</label><br>
-        <input type="number" id="staffing_levels" min="1" max="5" step="0.1"
-            style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;"><br>
+        <select id="staffing_levels" style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;">
+            <option value="">-- Select --</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select><br>
 
         <label>Pros</label><br>
         <textarea id="pros" rows="3"
@@ -426,10 +455,7 @@
 
             const response = await fetch(`/hospital/${hospitalId}/review/`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
 
