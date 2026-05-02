@@ -6,7 +6,7 @@ RateMyHospital is a Django web application designed to allow users to view healt
 ## Technologies Used
 *   **Python**
 *   **Django (v6.0.2)**
-*   **PostgreSQL** (for database management)
+*   **PostgreSQL** (for database management) download the newest version of PostgreSQL 
 *   **python-dotenv** (for environment variable management)
 
 ## Setup and Local Development
@@ -68,8 +68,8 @@ Start the Django development server:
 ```bash
 python manage.py runserver
 ```
-The application will be available at `http://127.0.0.1:8000/`.
+This would then run on your local.
 
 ---
 
-**Note:** For more in-depth information about the project structure and internal workings, please refer to `GEMINI.md`.
+If the database does not read, you may need to dump the file onto your system. So create a database in postgresql which would be named PG4ADMIN on as an app, and then psql -U postgres -d healthcare_platform < your_dump_file.sql. 
